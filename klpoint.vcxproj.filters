@@ -33,5 +33,8 @@
     <ClCompile Include="dynamic _memory_allocation.c">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="LinearList.c">
+      <Filter>源文件</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>

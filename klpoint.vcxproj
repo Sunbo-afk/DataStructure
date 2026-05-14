@@ -130,6 +130,7 @@
     <ClCompile Include="array.c" />
     <ClCompile Include="dynamic _memory_allocation.c" />
     <ClCompile Include="function.c" />
+    <ClCompile Include="LinearList.c" />
     <ClCompile Include="pointer.c" />
     <ClCompile Include="string.c" />
     <ClCompile Include="struct.c" />
