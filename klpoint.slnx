@@ -1,0 +1,7 @@
+<Solution>
+  <Configurations>
+    <Platform Name="x64" />
+    <Platform Name="x86" />
+  </Configurations>
+  <Project Path="klpoint.vcxproj" Id="c8acbd84-8a95-45ac-8dcf-71de365b7695" />
+</Solution>
