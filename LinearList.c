@@ -18,7 +18,6 @@ void initList(SeqList * L) {
 
 int main() {
 
-
 	//顺序表
 	//声明一个顺序表并初始化
 	SeqList list;
