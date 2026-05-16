@@ -1,4 +1,4 @@
-/*
+
 #include<stdio.h>
 
 struct Point {
@@ -60,4 +60,3 @@ int main() {
 	return 0;
 
 }
-*/

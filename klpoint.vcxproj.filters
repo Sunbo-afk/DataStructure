@@ -15,25 +15,7 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="function.c">
-      <Filter>源文件</Filter>
-    </ClCompile>
-    <ClCompile Include="string.c">
-      <Filter>源文件</Filter>
-    </ClCompile>
-    <ClCompile Include="pointer.c">
-      <Filter>源文件</Filter>
-    </ClCompile>
-    <ClCompile Include="array.c">
-      <Filter>源文件</Filter>
-    </ClCompile>
-    <ClCompile Include="struct.c">
-      <Filter>源文件</Filter>
-    </ClCompile>
-    <ClCompile Include="dynamic _memory_allocation.c">
-      <Filter>源文件</Filter>
-    </ClCompile>
-    <ClCompile Include="LinearList.c">
+    <ClCompile Include="LinkedList_Application.c">
       <Filter>源文件</Filter>
     </ClCompile>
   </ItemGroup>

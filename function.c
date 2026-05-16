@@ -1,4 +1,4 @@
-/*
+
 #include<stdio.h>
 
 void fun_f(int n) {
@@ -23,4 +23,3 @@ int main() {
 	printf("Sum: %d\n", sum);
 	return 0;
 }
-*/
