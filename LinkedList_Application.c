@@ -69,6 +69,29 @@ void freeList(Node* head) {
 
 
 //双指针查找倒数第k个节点(尽可能小的时间复杂度)
+Node* findKthFromEnd(Node* head, int k) {
+	Node* fast = head;
+	Node* slow = head;
+	for (int i = 0; i < k; i++) {
+		if (fast->next != NULL) {
+			fast = fast->next;
+		}
+		else {
+			return NULL; //链表长度小于k
+		}
+	}
+	while (fast->next != NULL) {
+		fast = fast->next;
+		slow = slow->next;
+	}
+	return slow; //slow指向倒数第k个节点
+}
+
+
+
+
+
+
 
 
 
@@ -129,6 +152,22 @@ int main() {
 	traverseList(head);
 	
 //双指针查找倒数第k个节点(尽可能小的时间复杂度)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
