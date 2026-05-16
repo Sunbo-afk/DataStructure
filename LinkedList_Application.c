@@ -20,7 +20,7 @@ Node* initList() {
 
 //遍历链表
 void traverseList(Node* head) {
-	Node* current = head->next;
+	Node* current = head;
 	while (current != NULL) {
 		printf("%d ", current->data);
 		current = current->next;
@@ -55,6 +55,18 @@ Node* TailInsert(Node* tail, ElemType e) {
 	return newNode;
 }
 
+//释放链表内存
+void freeList(Node* head) {
+	Node* current = head->next;
+	Node* temp;
+	while(current !=NULL){
+		temp = current->next;
+		free(current);
+		current = temp;
+	}
+	head->next = NULL;
+}
+
 
 //双指针查找倒数第k个节点(尽可能小的时间复杂度)
 
@@ -77,12 +89,30 @@ Node* TailInsert(Node* tail, ElemType e) {
 
 
 
+//判断链表是否有环
+int isCycle(Node* head) {
+	Node* fast = head;
+	Node* slow = head;
+	while(fast !=NULL&&fast->next!=NULL){
+		fast = fast->next->next;
+		slow = slow->next;
+		if(fast == slow){
+			return 1; // 有环
+		}
+	}
+	return 0; // 无环
+}
+
+//链表有环入口在哪
+
+
 
 
 
 
 int main() {
 	Node* head = initList();
+	traverseList(head);
 	printf("链表初始化完成，头结点数据为: %d\n", head->data);
 	printf("目前占用的存储空间为: %d\n", sizeof(Node));
 	//头插法插入元素
@@ -97,7 +127,50 @@ int main() {
 	tail = TailInsert(tail, 50);
 	printf("使用尾插法插入元素后，链表中的元素为: ");
 	traverseList(head);
+	
+//双指针查找倒数第k个节点(尽可能小的时间复杂度)
+
+
+
+
+//双指针查找链表的中间节点(尽可能小的时间复杂度)
+
+
+
+//双指针查找两个单词相同后缀(尽可能小的时间复杂度)
+
+
+
+//链表的反转(尽可能小的时间复杂度)
+
+
+
+//链表的合并(尽可能小的时间复杂度)
+
+
+
+//判断链表是否有环
+	freeList(head);
+	tail = getTail(head);
+	tail = TailInsert(tail, 1);
+	tail = TailInsert(tail, 2);
+	tail = TailInsert(tail, 3);
+	Node* three = tail;
+	tail = TailInsert(tail, 4);
+	tail = TailInsert(tail, 5);
+	tail = TailInsert(tail, 6);
+	tail = TailInsert(tail, 7);
+	tail = TailInsert(tail, 8);
+	tail->next = three;
+	if (isCycle(head)) {
+		printf("链表有环\n");
+	}
+	else
+		printf("链表无环\n");
+
+
+
+
+
 	return 0;
-
-
 }

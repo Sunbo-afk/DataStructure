@@ -224,6 +224,31 @@ void freeLinkedList(Node* head) {
 	head->next = NULL; //清空头结点的next指针
 }
 
+//单向循环链表(操作除了遍历不同需要注意，其余与普通链表相同)
+typedef struct CircularNode {
+	ElemType data;
+	struct CircularNode* next;
+
+}CircularNode;
+
+//初始化单向循环链表
+CircularNode* initCircularLinkedList() {
+	CircularNode* head = (CircularNode*)malloc(sizeof(CircularNode));
+	head->data = 0; //头结点数据域可存储链表长度或其他信息
+	head->next = head; //指向自己形成循环
+	return head;
+}
+
+//遍历单向循环链表
+void traverseCircularLinkedList(CircularNode* head) {
+	CircularNode* current = head->next; //跳过头结点
+	printf("单向循环链表中的元素为: ");
+	while (current != head) { //循环条件为current不等于head
+		printf("%d ", current->data);
+		current = current->next;
+	}
+	printf("\n");
+}
 
 int main() {
 
