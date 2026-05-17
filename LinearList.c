@@ -102,6 +102,14 @@ int find(SeqList * L, ElemType e) {
 	return 0; //未找到
 }
 
+// 释放动态顺序表
+void freeDynamicList(DynamicSeqList* list) {
+	if (list) {
+		free(list->data);  // 释放数组
+		free(list);        // 释放结构体
+	}
+}
+
 //链表
 typedef struct Node {
 	ElemType data;
@@ -250,6 +258,127 @@ void traverseCircularLinkedList(CircularNode* head) {
 	printf("\n");
 }
 
+//双向链表
+typedef struct doublyNode{
+	ElemType data;
+	struct doublyNode *prev, *next;
+}doublyNode;
+
+doublyNode* initdoublyLinkedList() {
+	doublyNode* head = (doublyNode*)malloc(sizeof(doublyNode));
+	head->data = 0; //头结点数据域可存储链表长度或其他信息
+	head->next = NULL;
+	head->prev = NULL;
+	return head;
+}
+
+//头插法
+int insertdoublyHead(doublyNode* doublyHead, ElemType e) {
+	doublyNode* newNode = (doublyNode*)malloc(sizeof(doublyNode));
+	newNode->data = e;
+	newNode->prev = doublyHead;
+	newNode->next = doublyHead->next;
+	if (doublyHead->next != NULL) {
+		doublyHead->next->prev = newNode;
+	}
+	doublyHead->next = newNode;
+	return 1;
+}
+
+//遍历
+void traversedoublyLinkedList(doublyNode* head) {
+	doublyNode* current = head->next; //跳过头结点
+	printf("链表中的元素为: ");
+	while (current != NULL) {
+		printf("%d ", current->data);
+		current = current->next;
+	}
+	printf("\n");
+}
+
+
+//尾插法
+doublyNode* getdoublyTail(doublyNode* head) {
+	doublyNode* current = head;
+	while (current->next != NULL) {
+		current = current->next;
+	}
+	return current;
+}
+doublyNode* insertdoublyTail(doublyNode* tail, ElemType e) {
+	doublyNode* newNode = (doublyNode*)malloc(sizeof(doublyNode));
+	newNode->data = e;
+	newNode->prev = tail;
+	tail->next = newNode;
+	newNode->next = NULL;
+	return newNode;
+}
+
+//指定位置插入
+int insertdoublyAtPosition(doublyNode* head, int pos, ElemType e) {
+	if (pos < 1) {
+		printf("插入位置不合法\n");
+		return 0;
+	}
+	doublyNode* current = head;
+	int index = 0;
+	while (current != NULL && index < pos - 1) {
+		current = current->next;
+		index++;
+	}
+	if (current == NULL) {
+		printf("插入位置超出链表长度\n");
+		return 0;
+	}
+	doublyNode* newNode = (doublyNode*)malloc(sizeof(doublyNode));
+	newNode->data = e;
+	newNode->prev = current;
+	newNode->next = current->next;
+	if (current->next != NULL) {
+		current->next->prev = newNode;
+	}
+	current->next = newNode;
+	return 1;
+}
+
+//删除节点
+int deletedoublyAtPosition(doublyNode* head, int pos, ElemType* e) {
+	if (pos < 1) {
+		printf("删除位置不合法\n");
+		return 0;
+	}
+	doublyNode* current = head;
+	int index = 0;
+	while (current->next != NULL && index < pos - 1) {
+		current = current->next;
+		index++;
+	}
+	if (current->next == NULL) {
+		printf("删除位置超出链表长度\n");
+		return 0;
+	}
+	doublyNode* temp = current->next;
+	*e = temp->data;
+	current->next = temp->next;
+	if (temp->next != NULL) {
+		temp->next->prev = current;
+	}
+	free(temp);
+	return 1;
+}
+
+//释放双向链表内存
+void freedoublyLinkedList(doublyNode* head) {
+	doublyNode* current = head->next;//跳过头结点
+	doublyNode* temp;
+	while (current != NULL) {
+		temp = current->next;
+		free(current);
+		current = temp;
+	}
+	head->next = NULL; //清空头结点的next指针
+}
+
 int main() {
 
 	//顺序表
@@ -264,6 +393,9 @@ int main() {
 	printf("动态分配内存地址的顺序表初始化完成，当前长度为: %d\n", dynamicList->length);
 	printf("目前占用的存储空间为: %d\n", sizeof(dynamicList->data));
 
+
+	//释放动态顺序表内存
+	freeDynamicList(dynamicList);
 
 	//按顺序依次插入元素
 	append(&list, 10);
@@ -341,6 +473,38 @@ int main() {
 	freeLinkedList(head);
 	int length_2 = getLinkedListLength(head);
 	printf("链表长度为: %d\n", length_2);
+
+	//双向链表
+	doublyNode* List = initdoublyLinkedList();
+	//头插法
+	insertdoublyHead(List, 10);
+	insertdoublyHead(List, 20);
+	insertdoublyHead(List, 30);
+	traversedoublyLinkedList(List);
+	
+	//尾插法
+	doublyNode* doublytail=getdoublyTail(List);
+	doublytail=insertdoublyTail(doublytail, 50);
+	doublytail=insertdoublyTail(doublytail, 60);
+	doublytail=insertdoublyTail(doublytail, 70);
+	traversedoublyLinkedList(List);
+
+	//指定位置插入
+	insertdoublyAtPosition(List, 3, 35);
+	printf("在位置3插入元素35\n");
+	traversedoublyLinkedList(List);
+
+	//删除节点
+	ElemType deleteddoublyNode;
+	printf("删除位置4的节点\n");
+	deletedoublyAtPosition(List, 4, &deleteddoublyNode);
+	printf("删除的节点数据为: %d\n", deleteddoublyNode);
+	traversedoublyLinkedList(List);
+
+
+	//释放双向链表内存
+	freedoublyLinkedList(List);
+
 
 	return 0;
 }

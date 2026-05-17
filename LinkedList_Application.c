@@ -69,30 +69,6 @@ void freeList(Node* head) {
 
 
 //双指针查找倒数第k个节点(尽可能小的时间复杂度)
-Node* findKthFromEnd(Node* head, int k) {
-	Node* fast = head;
-	Node* slow = head;
-	for (int i = 0; i < k; i++) {
-		if (fast->next != NULL) {
-			fast = fast->next;
-		}
-		else {
-			return NULL; //链表长度小于k
-		}
-	}
-	while (fast->next != NULL) {
-		fast = fast->next;
-		slow = slow->next;
-	}
-	return slow; //slow指向倒数第k个节点
-}
-
-
-
-
-
-
-
 
 
 
@@ -127,6 +103,34 @@ int isCycle(Node* head) {
 }
 
 //链表有环入口在哪
+Node* findBegin(Node* head) {
+	Node* fast = head;
+	Node* slow = head;
+	while (fast != NULL && fast->next != NULL) {
+		fast = fast->next->next;
+		slow = slow->next;
+		if (fast == slow) {
+			Node* p = fast;
+			int count = 1;
+			while (p->next != slow) {
+				count++;
+				p = p->next;
+			}
+			fast = head;
+			slow = head;
+			for (int i = 0; i < count; i++) {
+				fast = fast->next;
+			}
+			while (fast != slow) {
+				fast = fast->next;
+				slow = slow->next;
+			}
+			return fast;
+		}
+	}
+
+}
+
 
 
 
@@ -203,9 +207,12 @@ int main() {
 	tail->next = three;
 	if (isCycle(head)) {
 		printf("链表有环\n");
+		Node* begin = findBegin(head);
+		printf("环的入口在节点: %d\n", begin->data);
 	}
 	else
 		printf("链表无环\n");
+	
 
 
 
