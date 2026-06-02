@@ -1,4 +1,3 @@
-
 #include<stdio.h>
 #include<stdlib.h>
 #include<string.h>
@@ -15,41 +14,58 @@ typedef struct {
 	int y;
 }p1;
 
+void fun(int** temp) {
+	*temp = (int*)malloc(sizeof(int));
+	**temp = 100;
+}
+
+
+
+
 int main() {
-	int* ptr; // Declare a pointer to an integer
-	ptr = (int*)malloc(sizeof(int)); // Dynamically allocate memory for an integer and assign the address to ptr
-	printf("Address of allocated memory: %p\n", (void*)ptr); // Print the address of the allocated memory
-	printf("Value at allocated memory before assignment: %d\n", *ptr); // This will print an indeterminate value, as the allocated memory is uninitialized
-	free(ptr); // Free the allocated memory
+	int* ptr; // 定义一个整型指针
+	ptr = (int*)malloc(sizeof(int)); // 动态申请一块int大小内存，将首地址赋值给ptr
+	printf("已分配内存的地址: %p\n", (void*)ptr); // 打印动态分配内存的地址
+	printf("赋值前内存里的数据: %d\n", *ptr); // 输出随机垃圾值，刚申请的堆内存未初始化
+	free(ptr); // 释放这块申请的内存
 
-	char* str; // Declare a pointer to a character
-	str = (char*)malloc(10); // Dynamically allocate memory for a string of 100 characters
-	strcpy(str, "Hello"); // Copy a string into the allocated memory
-	printf("String in allocated memory: %s\n", str); // Print the string stored in the allocated memory
-	free(str); // Free the allocated memory for the string
+	char* str; // 定义字符型指针
+	str = (char*)malloc(10); // 动态分配可存放10个字符的内存空间
+	strcpy(str, "Hello"); // 把字符串复制到动态内存中
+	printf("动态内存中的字符串: %s\n", str); // 打印保存在动态内存里的字符串
+	free(str); // 释放字符串占用的动态内存
 
-	//dynamically allocate memory for an array of integers
+	//为整型数组动态分配内存
 	int* arr;
-	int n = 5; // Size of the array
-	arr = (int*)malloc(n * sizeof(int)); // Dynamically allocate memory for the array
+	int n = 5; // 数组长度
+	arr = (int*)malloc(n * sizeof(int)); // 动态开辟存放n个int元素的数组空间
 	for (int i = 0; i < n; i++) {
-		arr[i] = i + 1; // Initialize the array
+		arr[i] = i + 1; // 给数组元素赋值初始化
 	}
-	printf("Array elements: ");
+	printf("数组元素: ");
 	for (int i = 0; i < n; i++) {
 		printf("%d ", arr[i]);
 	}
 	printf("\n");
-	free(arr); // Free the allocated memory for the array
+	free(arr); // 释放数组占用的动态内存
 
-	//dynamically allocate memory for an struct  of integers
+	//为结构体变量动态分配内存
 	p1* p;
 	p = (p1*)malloc(sizeof(p1));
 	p->x = 15;
 	p->y = 20;
-	printf("Struct values: x = %d, y = %d\n", p->x, p->y);
+	printf("结构体数据: x = %d, y = %d\n", p->x, p->y);
 	free(p);
 
+
+	//动态内存分配时传值的问题，利用指针的指针来实现函数内修改主函数中的变量值
+	int *pp = NULL;
+	fun(&pp);
+	printf("%d\n", pp);
+	//在函数fun中，我们传递了pp的地址（&pp），因此temp是一个指向pp的指针。
+	// 当我们在fun函数中使用*temp时，我们实际上是在修改pp的值。
+	// 通过malloc分配内存并将值100赋给**temp，我们成功地修改了pp的值，使其指向新分配的内存，并且该内存中的值为100。
+
+
 	return 0;
- }
- 
+}
